@@ -15,6 +15,8 @@ public class PeopleController : MonoBehaviour {
 	private bool correct = false;
 	private GameObject[] numberobj;
 //	public InputField user_Input;
+	private GameObject spawn;
+
 
 	// Use this for initialization
 	void Start () {
@@ -24,25 +26,17 @@ public class PeopleController : MonoBehaviour {
 		rend.material.color = newColor;
 		text=dollar.GetComponent<TextMesh> ();
 		text.text = "$"+Random.Range(1, 200).ToString();
-
-
 		numberobj = GameObject.FindGameObjectsWithTag("Number");
-
-
+		spawn = GameObject.Find ("SpawnPoint");
 	}
 
 	// Update is called once per frame
 	void Update () {
 		Text numberText = numberobj[0].GetComponent<Text> ();
-		print (numberText.text);
+//		print (numberText.text);
 		if( ("$"+numberText.text ) == text.text ){
 			correct = true;
 		}
-//		print (input_num.text);
-//		if( ("$"+input_num.text ) == text.text ){
-//			correct = true;
-//		}
-
 
 		if(this.transform.position.x < -0.5f  && still == false ){
 			animatorController.SetBool ("walking", true);
@@ -55,22 +49,28 @@ public class PeopleController : MonoBehaviour {
 				animatorController.SetBool ("walking", true);
 				transform.rotation = Quaternion.AngleAxis( 80 , Vector3.up);
 				this.transform.Translate(Vector3.forward * Time.deltaTime);
+				PeopleSpawner spawnerScript=(PeopleSpawner)spawn.GetComponent(typeof(PeopleSpawner));
+				spawnerScript.getCorrect(true);
 			}
 		}
 	}
 	void OnTriggerEnter(Collider coll) {//撞到
 //		Debug.Log ("撞到:" + coll.gameObject.transform.position.x);
 		if (coll.gameObject.transform.position.x < 0) {
-			still = true;
+			still = true;//有撞到
 		}
+		print (coll.gameObject.transform.position.x);
 		if (coll.gameObject.transform.position.x > 0) {
-			still = false;
+			
+			still = false;//沒有撞到
+
 		}
 
 //		Destroy (coll.gameObject);
-//		this.transform.position.x = 
-//		this.transform.Translate(Vector3.forward*0); 
-//		this.transform.position.x= coll.gameObject.transform.position.x;
+	}
+	public void go(){
+		//往前
+		print(this.name+"go??" +"fdfdf");
 	}
 
 }
