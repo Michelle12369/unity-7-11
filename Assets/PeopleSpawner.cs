@@ -21,8 +21,8 @@ public class PeopleSpawner : MonoBehaviour {
 			SpawnCounter = 0;
 			GameObject newPeople = GameObject.Instantiate (PeopleCandidate);
 
-//			GameObject.FindGameObjectsWithTag("Number");
-
+//			GameObject numberobj = GameObject.FindGameObjectsWithTag("Number");
+//			Text numberText = numberobj.GetComponent<Text> ();
 
 
 //			newPeople.transform.SetParent(this.transform);
