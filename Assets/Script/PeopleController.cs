@@ -13,7 +13,7 @@ public class PeopleController : MonoBehaviour {
 	public Text input_num;
 	private bool still = false;
 	private bool correct = false;
-
+	private GameObject[] numberobj;
 //	public InputField user_Input;
 
 	// Use this for initialization
@@ -26,10 +26,18 @@ public class PeopleController : MonoBehaviour {
 		text.text = "$"+Random.Range(1, 200).ToString();
 
 
+		numberobj = GameObject.FindGameObjectsWithTag("Number");
+
+
 	}
 
 	// Update is called once per frame
 	void Update () {
+		Text numberText = numberobj[0].GetComponent<Text> ();
+		print (numberText.text);
+		if( ("$"+numberText.text ) == text.text ){
+			correct = true;
+		}
 //		print (input_num.text);
 //		if( ("$"+input_num.text ) == text.text ){
 //			correct = true;
