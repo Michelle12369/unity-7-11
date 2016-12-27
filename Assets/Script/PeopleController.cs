@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PeopleController : MonoBehaviour {
 
@@ -8,6 +9,13 @@ public class PeopleController : MonoBehaviour {
 	public GameObject dollar;//get dollar
 	private Renderer rend;//get item mesh renderer
 	private TextMesh text;
+
+	public Text input_num;
+	private bool still = false;
+	private bool correct = false;
+
+//	public InputField user_Input;
+
 	// Use this for initialization
 	void Start () {
 		animatorController = this.GetComponent<Animator> ();
@@ -15,24 +23,46 @@ public class PeopleController : MonoBehaviour {
 		Color newColor =  new Color( Random.value, Random.value, Random.value, 1.0f );
 		rend.material.color = newColor;
 		text=dollar.GetComponent<TextMesh> ();
-		text.text = "$"+Random.Range(0, 200).ToString();
+		text.text = "$"+Random.Range(1, 200).ToString();
+
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if(this.transform.position.x < -0.5f){
-		animatorController.SetBool ("walking", true);
-		this.transform.Translate(Vector3.forward * Time.deltaTime);
-		}else if (this.transform.position.x > -0.5f){
+//		print (input_num.text);
+//		if( ("$"+input_num.text ) == text.text ){
+//			correct = true;
+//		}
+
+
+		if(this.transform.position.x < -0.5f  && still == false ){
+			animatorController.SetBool ("walking", true);
+			this.transform.Translate(Vector3.forward * Time.deltaTime);
+		}else if (this.transform.position.x > -0.5f || still ==true ){
 			animatorController.SetBool ("walking", false);
 			transform.rotation = Quaternion.AngleAxis(145, Vector3.up);
-		}
 
+			if( correct == true ){
+				animatorController.SetBool ("walking", true);
+				transform.rotation = Quaternion.AngleAxis( 80 , Vector3.up);
+				this.transform.Translate(Vector3.forward * Time.deltaTime);
+			}
+		}
 	}
 	void OnTriggerEnter(Collider coll) {//撞到
-		Debug.Log ("Collision" + coll.gameObject.transform.position.x);
+//		Debug.Log ("撞到:" + coll.gameObject.transform.position.x);
+		if (coll.gameObject.transform.position.x < 0) {
+			still = true;
+		}
+		if (coll.gameObject.transform.position.x > 0) {
+			still = false;
+		}
 
-		//this.transform.Translate(Vector3.forward*0); 
-//				this.transform.position.x= coll.gameObject.transform.position.x;
+//		Destroy (coll.gameObject);
+//		this.transform.position.x = 
+//		this.transform.Translate(Vector3.forward*0); 
+//		this.transform.position.x= coll.gameObject.transform.position.x;
 	}
+
 }
